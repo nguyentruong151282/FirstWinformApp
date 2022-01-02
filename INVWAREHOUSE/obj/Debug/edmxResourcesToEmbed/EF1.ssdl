@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="invwarehouseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ChiTietSanPham">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CongSuat" Type="int" Nullable="false" />
+    <Property Name="opt" Type="varchar" MaxLength="25" />
+    <Property Name="MaQR" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="TenSeries" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="DanhMucSanPham">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenSeries" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="SoLuong" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TaiKhoanDangNhap">
+    <Key>
+      <PropertyRef Name="IDTaiKhoan" />
+    </Key>
+    <Property Name="TenDangNhap" Type="nvarchar" MaxLength="25" />
+    <Property Name="MatKhau" Type="nvarchar" MaxLength="50" />
+    <Property Name="IDTaiKhoan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AccessLevel" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="ThongTinHoaDon">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenKH" Type="nvarchar" MaxLength="50" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="50" />
+    <Property Name="SDT" Type="nvarchar" MaxLength="50" />
+    <Property Name="ngay" Type="datetime" />
+    <Property Name="TenSeries" Type="nvarchar" MaxLength="50" />
+    <Property Name="cs" Type="int" />
+    <Property Name="opt" Type="nvarchar" MaxLength="50" />
+    <Property Name="qr" Type="nvarchar" MaxLength="6" />
+  </EntityType>
+  <EntityType Name="ThongTinTaiKhoan">
+    <Key>
+      <PropertyRef Name="IDTaiKhoan" />
+    </Key>
+    <Property Name="IDTaiKhoan" Type="int" Nullable="false" />
+    <Property Name="Ten" Type="nvarchar" MaxLength="25" />
+    <Property Name="Tuoi" Type="int" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="100" />
+    <Property Name="SDT" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK__ThongTinT__IDTai__5629CD9C">
+    <End Role="TaiKhoanDangNhap" Type="Self.TaiKhoanDangNhap" Multiplicity="1" />
+    <End Role="ThongTinTaiKhoan" Type="Self.ThongTinTaiKhoan" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TaiKhoanDangNhap">
+        <PropertyRef Name="IDTaiKhoan" />
+      </Principal>
+      <Dependent Role="ThongTinTaiKhoan">
+        <PropertyRef Name="IDTaiKhoan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="Usp_AddAccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="usr" Type="varchar" Mode="In" />
+    <Parameter Name="pwd" Type="varchar" Mode="In" />
+    <Parameter Name="acc" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Usp_ChangePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="usr" Type="varchar" Mode="In" />
+    <Parameter Name="pwd" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Usp_CheckAccountExist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="usr" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Usp_DeleteAccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="usr" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Usp_LoadDanhSachTaiKhoan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="acc" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Usp_Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="usr" Type="varchar" Mode="In" />
+    <Parameter Name="pwd" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Usp_UpdateThongTin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ten" Type="varchar" Mode="In" />
+    <Parameter Name="tuoi" Type="int" Mode="In" />
+    <Parameter Name="dc" Type="varchar" Mode="In" />
+    <Parameter Name="SDT" Type="varchar" Mode="In" />
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="invwarehouseModelStoreContainer">
+    <EntitySet Name="ChiTietSanPham" EntityType="Self.ChiTietSanPham" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DanhMucSanPham" EntityType="Self.DanhMucSanPham" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TaiKhoanDangNhap" EntityType="Self.TaiKhoanDangNhap" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ThongTinHoaDon" EntityType="Self.ThongTinHoaDon" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ThongTinTaiKhoan" EntityType="Self.ThongTinTaiKhoan" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__ThongTinT__IDTai__5629CD9C" Association="Self.FK__ThongTinT__IDTai__5629CD9C">
+      <End Role="TaiKhoanDangNhap" EntitySet="TaiKhoanDangNhap" />
+      <End Role="ThongTinTaiKhoan" EntitySet="ThongTinTaiKhoan" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

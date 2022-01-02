@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="invwarehouseModelStoreContainer" CdmEntityContainer="invwarehouseEntities">
+    <EntitySetMapping Name="ChiTietSanPhams">
+      <EntityTypeMapping TypeName="invwarehouseModel.ChiTietSanPham">
+        <MappingFragment StoreEntitySet="ChiTietSanPham">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="CongSuat" ColumnName="CongSuat" />
+          <ScalarProperty Name="opt" ColumnName="opt" />
+          <ScalarProperty Name="MaQR" ColumnName="MaQR" />
+          <ScalarProperty Name="TenSeries" ColumnName="TenSeries" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DanhMucSanPhams">
+      <EntityTypeMapping TypeName="invwarehouseModel.DanhMucSanPham">
+        <MappingFragment StoreEntitySet="DanhMucSanPham">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="TenSeries" ColumnName="TenSeries" />
+          <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TaiKhoanDangNhaps">
+      <EntityTypeMapping TypeName="invwarehouseModel.TaiKhoanDangNhap">
+        <MappingFragment StoreEntitySet="TaiKhoanDangNhap">
+          <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+          <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+          <ScalarProperty Name="IDTaiKhoan" ColumnName="IDTaiKhoan" />
+          <ScalarProperty Name="AccessLevel" ColumnName="AccessLevel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ThongTinTaiKhoans">
+      <EntityTypeMapping TypeName="invwarehouseModel.ThongTinTaiKhoan">
+        <MappingFragment StoreEntitySet="ThongTinTaiKhoan">
+          <ScalarProperty Name="IDTaiKhoan" ColumnName="IDTaiKhoan" />
+          <ScalarProperty Name="Ten" ColumnName="Ten" />
+          <ScalarProperty Name="Tuoi" ColumnName="Tuoi" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+          <ScalarProperty Name="SDT" ColumnName="SDT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="Usp_AddAccount" FunctionName="invwarehouseModel.Store.Usp_AddAccount" />
+    <FunctionImportMapping FunctionImportName="Usp_ChangePassword" FunctionName="invwarehouseModel.Store.Usp_ChangePassword" />
+    <FunctionImportMapping FunctionImportName="Usp_CheckAccountExist" FunctionName="invwarehouseModel.Store.Usp_CheckAccountExist">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="invwarehouseModel.Usp_CheckAccountExist_Result">
+          <ScalarProperty Name="IDTaiKhoan" ColumnName="IDTaiKhoan" />
+          <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+          <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+          <ScalarProperty Name="AccessLevel" ColumnName="AccessLevel" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Usp_DeleteAccount" FunctionName="invwarehouseModel.Store.Usp_DeleteAccount" />
+    <FunctionImportMapping FunctionImportName="Usp_LoadDanhSachTaiKhoan" FunctionName="invwarehouseModel.Store.Usp_LoadDanhSachTaiKhoan">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="invwarehouseModel.Usp_LoadDanhSachTaiKhoan_Result">
+          <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+          <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+          <ScalarProperty Name="AccessLevel" ColumnName="AccessLevel" />
+          <ScalarProperty Name="IDTaiKhoan" ColumnName="IDTaiKhoan" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Usp_Login" FunctionName="invwarehouseModel.Store.Usp_Login">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="invwarehouseModel.Usp_Login_Result">
+          <ScalarProperty Name="IDTaiKhoan" ColumnName="IDTaiKhoan" />
+          <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+          <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+          <ScalarProperty Name="AccessLevel" ColumnName="AccessLevel" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Usp_UpdateThongTin" FunctionName="invwarehouseModel.Store.Usp_UpdateThongTin" />
+    <EntitySetMapping Name="ThongTinHoaDons">
+      <EntityTypeMapping TypeName="invwarehouseModel.ThongTinHoaDon">
+        <MappingFragment StoreEntitySet="ThongTinHoaDon">
+          <ScalarProperty Name="qr" ColumnName="qr" />
+          <ScalarProperty Name="opt" ColumnName="opt" />
+          <ScalarProperty Name="cs" ColumnName="cs" />
+          <ScalarProperty Name="TenSeries" ColumnName="TenSeries" />
+          <ScalarProperty Name="ngay" ColumnName="ngay" />
+          <ScalarProperty Name="SDT" ColumnName="SDT" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+          <ScalarProperty Name="TenKH" ColumnName="TenKH" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

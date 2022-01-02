@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="invwarehouseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ChiTietSanPham">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CongSuat" Type="int" Nullable="false" />
+          <Property Name="opt" Type="varchar" MaxLength="25" />
+          <Property Name="MaQR" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TenSeries" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="DanhMucSanPham">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenSeries" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="SoLuong" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TaiKhoanDangNhap">
+          <Key>
+            <PropertyRef Name="IDTaiKhoan" />
+          </Key>
+          <Property Name="TenDangNhap" Type="nvarchar" MaxLength="25" />
+          <Property Name="MatKhau" Type="nvarchar" MaxLength="50" />
+          <Property Name="IDTaiKhoan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccessLevel" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="ThongTinHoaDon">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenKH" Type="nvarchar" MaxLength="50" />
+          <Property Name="DiaChi" Type="nvarchar" MaxLength="50" />
+          <Property Name="SDT" Type="nvarchar" MaxLength="50" />
+          <Property Name="ngay" Type="datetime" />
+          <Property Name="TenSeries" Type="nvarchar" MaxLength="50" />
+          <Property Name="cs" Type="int" />
+          <Property Name="opt" Type="nvarchar" MaxLength="50" />
+          <Property Name="qr" Type="nvarchar" MaxLength="6" />
+        </EntityType>
+        <EntityType Name="ThongTinTaiKhoan">
+          <Key>
+            <PropertyRef Name="IDTaiKhoan" />
+          </Key>
+          <Property Name="IDTaiKhoan" Type="int" Nullable="false" />
+          <Property Name="Ten" Type="nvarchar" MaxLength="25" />
+          <Property Name="Tuoi" Type="int" />
+          <Property Name="DiaChi" Type="nvarchar" MaxLength="100" />
+          <Property Name="SDT" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK__ThongTinT__IDTai__5629CD9C">
+          <End Role="TaiKhoanDangNhap" Type="Self.TaiKhoanDangNhap" Multiplicity="1" />
+          <End Role="ThongTinTaiKhoan" Type="Self.ThongTinTaiKhoan" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoanDangNhap">
+              <PropertyRef Name="IDTaiKhoan" />
+            </Principal>
+            <Dependent Role="ThongTinTaiKhoan">
+              <PropertyRef Name="IDTaiKhoan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Usp_AddAccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usr" Type="varchar" Mode="In" />
+          <Parameter Name="pwd" Type="varchar" Mode="In" />
+          <Parameter Name="acc" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Usp_ChangePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usr" Type="varchar" Mode="In" />
+          <Parameter Name="pwd" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Usp_CheckAccountExist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usr" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Usp_DeleteAccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usr" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Usp_LoadDanhSachTaiKhoan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="acc" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Usp_Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usr" Type="varchar" Mode="In" />
+          <Parameter Name="pwd" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Usp_UpdateThongTin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ten" Type="varchar" Mode="In" />
+          <Parameter Name="tuoi" Type="int" Mode="In" />
+          <Parameter Name="dc" Type="varchar" Mode="In" />
+          <Parameter Name="SDT" Type="varchar" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="invwarehouseModelStoreContainer">
+          <EntitySet Name="ChiTietSanPham" EntityType="Self.ChiTietSanPham" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DanhMucSanPham" EntityType="Self.DanhMucSanPham" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaiKhoanDangNhap" EntityType="Self.TaiKhoanDangNhap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThongTinHoaDon" EntityType="Self.ThongTinHoaDon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThongTinTaiKhoan" EntityType="Self.ThongTinTaiKhoan" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ThongTinT__IDTai__5629CD9C" Association="Self.FK__ThongTinT__IDTai__5629CD9C">
+            <End Role="TaiKhoanDangNhap" EntitySet="TaiKhoanDangNhap" />
+            <End Role="ThongTinTaiKhoan" EntitySet="ThongTinTaiKhoan" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="invwarehouseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ChiTietSanPham">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CongSuat" Type="Int32" Nullable="false" />
+          <Property Name="opt" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="MaQR" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TenSeries" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DanhMucSanPham">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenSeries" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SoLuong" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TaiKhoanDangNhap">
+          <Key>
+            <PropertyRef Name="IDTaiKhoan" />
+          </Key>
+          <Property Name="TenDangNhap" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="MatKhau" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IDTaiKhoan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccessLevel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ThongTinTaiKhoan" Relationship="Self.FK__ThongTinT__IDTai__5629CD9C" FromRole="TaiKhoanDangNhap" ToRole="ThongTinTaiKhoan" />
+        </EntityType>
+        <EntityType Name="ThongTinTaiKhoan">
+          <Key>
+            <PropertyRef Name="IDTaiKhoan" />
+          </Key>
+          <Property Name="IDTaiKhoan" Type="Int32" Nullable="false" />
+          <Property Name="Ten" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Tuoi" Type="Int32" />
+          <Property Name="DiaChi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SDT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TaiKhoanDangNhap" Relationship="Self.FK__ThongTinT__IDTai__5629CD9C" FromRole="ThongTinTaiKhoan" ToRole="TaiKhoanDangNhap" />
+        </EntityType>
+        <Association Name="FK__ThongTinT__IDTai__5629CD9C">
+          <End Role="TaiKhoanDangNhap" Type="Self.TaiKhoanDangNhap" Multiplicity="1" />
+          <End Role="ThongTinTaiKhoan" Type="Self.ThongTinTaiKhoan" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoanDangNhap">
+              <PropertyRef Name="IDTaiKhoan" />
+            </Principal>
+            <Dependent Role="ThongTinTaiKhoan">
+              <PropertyRef Name="IDTaiKhoan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="invwarehouseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ChiTietSanPhams" EntityType="Self.ChiTietSanPham" />
+          <EntitySet Name="DanhMucSanPhams" EntityType="Self.DanhMucSanPham" />
+          <EntitySet Name="TaiKhoanDangNhaps" EntityType="Self.TaiKhoanDangNhap" />
+          <EntitySet Name="ThongTinTaiKhoans" EntityType="Self.ThongTinTaiKhoan" />
+          <AssociationSet Name="FK__ThongTinT__IDTai__5629CD9C" Association="Self.FK__ThongTinT__IDTai__5629CD9C">
+            <End Role="TaiKhoanDangNhap" EntitySet="TaiKhoanDangNhaps" />
+            <End Role="ThongTinTaiKhoan" EntitySet="ThongTinTaiKhoans" />
+          </AssociationSet>
+          <FunctionImport Name="Usp_AddAccount">
+            <Parameter Name="usr" Mode="In" Type="String" />
+            <Parameter Name="pwd" Mode="In" Type="String" />
+            <Parameter Name="acc" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Usp_ChangePassword">
+            <Parameter Name="usr" Mode="In" Type="String" />
+            <Parameter Name="pwd" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Usp_CheckAccountExist" ReturnType="Collection(invwarehouseModel.Usp_CheckAccountExist_Result)">
+          <Parameter Name="usr" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Usp_DeleteAccount">
+          <Parameter Name="usr" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Usp_LoadDanhSachTaiKhoan" ReturnType="Collection(invwarehouseModel.Usp_LoadDanhSachTaiKhoan_Result)">
+          <Parameter Name="acc" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Usp_Login" ReturnType="Collection(invwarehouseModel.Usp_Login_Result)">
+            <Parameter Name="usr" Mode="In" Type="String" />
+            <Parameter Name="pwd" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Usp_UpdateThongTin">
+            <Parameter Name="ten" Mode="In" Type="String" />
+            <Parameter Name="tuoi" Mode="In" Type="Int32" />
+            <Parameter Name="dc" Mode="In" Type="String" />
+            <Parameter Name="SDT" Mode="In" Type="String" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="ThongTinHoaDons" EntityType="invwarehouseModel.ThongTinHoaDon" />
+        </EntityContainer>
+        <ComplexType Name="Usp_CheckAccountExist_Result">
+          <Property Type="Int32" Name="IDTaiKhoan" Nullable="false" />
+          <Property Type="String" Name="TenDangNhap" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="MatKhau" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AccessLevel" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="Usp_LoadDanhSachTaiKhoan_Result">
+          <Property Type="String" Name="TenDangNhap" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="MatKhau" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AccessLevel" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="IDTaiKhoan" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="Usp_Login_Result">
+          <Property Type="Int32" Name="IDTaiKhoan" Nullable="false" />
+          <Property Type="String" Name="TenDangNhap" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="MatKhau" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AccessLevel" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <EntityType Name="ThongTinHoaDon">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenKH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DiaChi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SDT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ngay" Type="DateTime" Precision="3" />
+          <Property Name="TenSeries" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cs" Type="Int32" />
+          <Property Name="opt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="qr" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="invwarehouseModelStoreContainer" CdmEntityContainer="invwarehouseEntities">
+          <EntitySetMapping Name="ChiTietSanPhams">
+            <EntityTypeMapping TypeName="invwarehouseModel.ChiTietSanPham">
+              <MappingFragment StoreEntitySet="ChiTietSanPham">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="CongSuat" ColumnName="CongSuat" />
+                <ScalarProperty Name="opt" ColumnName="opt" />
+                <ScalarProperty Name="MaQR" ColumnName="MaQR" />
+                <ScalarProperty Name="TenSeries" ColumnName="TenSeries" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DanhMucSanPhams">
+            <EntityTypeMapping TypeName="invwarehouseModel.DanhMucSanPham">
+              <MappingFragment StoreEntitySet="DanhMucSanPham">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TenSeries" ColumnName="TenSeries" />
+                <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaiKhoanDangNhaps">
+            <EntityTypeMapping TypeName="invwarehouseModel.TaiKhoanDangNhap">
+              <MappingFragment StoreEntitySet="TaiKhoanDangNhap">
+                <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+                <ScalarProperty Name="IDTaiKhoan" ColumnName="IDTaiKhoan" />
+                <ScalarProperty Name="AccessLevel" ColumnName="AccessLevel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ThongTinTaiKhoans">
+            <EntityTypeMapping TypeName="invwarehouseModel.ThongTinTaiKhoan">
+              <MappingFragment StoreEntitySet="ThongTinTaiKhoan">
+                <ScalarProperty Name="IDTaiKhoan" ColumnName="IDTaiKhoan" />
+                <ScalarProperty Name="Ten" ColumnName="Ten" />
+                <ScalarProperty Name="Tuoi" ColumnName="Tuoi" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Usp_AddAccount" FunctionName="invwarehouseModel.Store.Usp_AddAccount" />
+          <FunctionImportMapping FunctionImportName="Usp_ChangePassword" FunctionName="invwarehouseModel.Store.Usp_ChangePassword" />
+          <FunctionImportMapping FunctionImportName="Usp_CheckAccountExist" FunctionName="invwarehouseModel.Store.Usp_CheckAccountExist">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="invwarehouseModel.Usp_CheckAccountExist_Result">
+                <ScalarProperty Name="IDTaiKhoan" ColumnName="IDTaiKhoan" />
+                <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+                <ScalarProperty Name="AccessLevel" ColumnName="AccessLevel" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Usp_DeleteAccount" FunctionName="invwarehouseModel.Store.Usp_DeleteAccount" />
+          <FunctionImportMapping FunctionImportName="Usp_LoadDanhSachTaiKhoan" FunctionName="invwarehouseModel.Store.Usp_LoadDanhSachTaiKhoan">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="invwarehouseModel.Usp_LoadDanhSachTaiKhoan_Result">
+                <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+                <ScalarProperty Name="AccessLevel" ColumnName="AccessLevel" />
+                <ScalarProperty Name="IDTaiKhoan" ColumnName="IDTaiKhoan" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Usp_Login" FunctionName="invwarehouseModel.Store.Usp_Login">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="invwarehouseModel.Usp_Login_Result">
+                <ScalarProperty Name="IDTaiKhoan" ColumnName="IDTaiKhoan" />
+                <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+                <ScalarProperty Name="AccessLevel" ColumnName="AccessLevel" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Usp_UpdateThongTin" FunctionName="invwarehouseModel.Store.Usp_UpdateThongTin" />
+          <EntitySetMapping Name="ThongTinHoaDons">
+            <EntityTypeMapping TypeName="invwarehouseModel.ThongTinHoaDon">
+              <MappingFragment StoreEntitySet="ThongTinHoaDon">
+                <ScalarProperty Name="qr" ColumnName="qr" />
+                <ScalarProperty Name="opt" ColumnName="opt" />
+                <ScalarProperty Name="cs" ColumnName="cs" />
+                <ScalarProperty Name="TenSeries" ColumnName="TenSeries" />
+                <ScalarProperty Name="ngay" ColumnName="ngay" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+                <ScalarProperty Name="TenKH" ColumnName="TenKH" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

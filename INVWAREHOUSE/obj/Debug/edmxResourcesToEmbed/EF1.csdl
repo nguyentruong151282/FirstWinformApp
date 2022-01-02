@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="invwarehouseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ChiTietSanPham">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CongSuat" Type="Int32" Nullable="false" />
+    <Property Name="opt" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="MaQR" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TenSeries" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="DanhMucSanPham">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenSeries" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SoLuong" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TaiKhoanDangNhap">
+    <Key>
+      <PropertyRef Name="IDTaiKhoan" />
+    </Key>
+    <Property Name="TenDangNhap" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="MatKhau" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IDTaiKhoan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AccessLevel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ThongTinTaiKhoan" Relationship="Self.FK__ThongTinT__IDTai__5629CD9C" FromRole="TaiKhoanDangNhap" ToRole="ThongTinTaiKhoan" />
+  </EntityType>
+  <EntityType Name="ThongTinTaiKhoan">
+    <Key>
+      <PropertyRef Name="IDTaiKhoan" />
+    </Key>
+    <Property Name="IDTaiKhoan" Type="Int32" Nullable="false" />
+    <Property Name="Ten" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="Tuoi" Type="Int32" />
+    <Property Name="DiaChi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="SDT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TaiKhoanDangNhap" Relationship="Self.FK__ThongTinT__IDTai__5629CD9C" FromRole="ThongTinTaiKhoan" ToRole="TaiKhoanDangNhap" />
+  </EntityType>
+  <Association Name="FK__ThongTinT__IDTai__5629CD9C">
+    <End Role="TaiKhoanDangNhap" Type="Self.TaiKhoanDangNhap" Multiplicity="1" />
+    <End Role="ThongTinTaiKhoan" Type="Self.ThongTinTaiKhoan" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TaiKhoanDangNhap">
+        <PropertyRef Name="IDTaiKhoan" />
+      </Principal>
+      <Dependent Role="ThongTinTaiKhoan">
+        <PropertyRef Name="IDTaiKhoan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="invwarehouseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ChiTietSanPhams" EntityType="Self.ChiTietSanPham" />
+    <EntitySet Name="DanhMucSanPhams" EntityType="Self.DanhMucSanPham" />
+    <EntitySet Name="TaiKhoanDangNhaps" EntityType="Self.TaiKhoanDangNhap" />
+    <EntitySet Name="ThongTinTaiKhoans" EntityType="Self.ThongTinTaiKhoan" />
+    <AssociationSet Name="FK__ThongTinT__IDTai__5629CD9C" Association="Self.FK__ThongTinT__IDTai__5629CD9C">
+      <End Role="TaiKhoanDangNhap" EntitySet="TaiKhoanDangNhaps" />
+      <End Role="ThongTinTaiKhoan" EntitySet="ThongTinTaiKhoans" />
+    </AssociationSet>
+    <FunctionImport Name="Usp_AddAccount">
+      <Parameter Name="usr" Mode="In" Type="String" />
+      <Parameter Name="pwd" Mode="In" Type="String" />
+      <Parameter Name="acc" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Usp_ChangePassword">
+      <Parameter Name="usr" Mode="In" Type="String" />
+      <Parameter Name="pwd" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Usp_CheckAccountExist" ReturnType="Collection(invwarehouseModel.Usp_CheckAccountExist_Result)">
+      <Parameter Name="usr" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Usp_DeleteAccount">
+      <Parameter Name="usr" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Usp_LoadDanhSachTaiKhoan" ReturnType="Collection(invwarehouseModel.Usp_LoadDanhSachTaiKhoan_Result)">
+      <Parameter Name="acc" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Usp_Login" ReturnType="Collection(invwarehouseModel.Usp_Login_Result)">
+      <Parameter Name="usr" Mode="In" Type="String" />
+      <Parameter Name="pwd" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Usp_UpdateThongTin">
+      <Parameter Name="ten" Mode="In" Type="String" />
+      <Parameter Name="tuoi" Mode="In" Type="Int32" />
+      <Parameter Name="dc" Mode="In" Type="String" />
+      <Parameter Name="SDT" Mode="In" Type="String" />
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="ThongTinHoaDons" EntityType="invwarehouseModel.ThongTinHoaDon" />
+  </EntityContainer>
+  <ComplexType Name="Usp_CheckAccountExist_Result">
+    <Property Type="Int32" Name="IDTaiKhoan" Nullable="false" />
+    <Property Type="String" Name="TenDangNhap" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="MatKhau" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="AccessLevel" Nullable="true" MaxLength="20" />
+  </ComplexType>
+  <ComplexType Name="Usp_LoadDanhSachTaiKhoan_Result">
+    <Property Type="String" Name="TenDangNhap" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="MatKhau" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="AccessLevel" Nullable="true" MaxLength="20" />
+    <Property Type="Int32" Name="IDTaiKhoan" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Usp_Login_Result">
+    <Property Type="Int32" Name="IDTaiKhoan" Nullable="false" />
+    <Property Type="String" Name="TenDangNhap" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="MatKhau" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="AccessLevel" Nullable="true" MaxLength="20" />
+  </ComplexType>
+  <EntityType Name="ThongTinHoaDon">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenKH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DiaChi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SDT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ngay" Type="DateTime" Precision="3" />
+    <Property Name="TenSeries" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="cs" Type="Int32" />
+    <Property Name="opt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="qr" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>
